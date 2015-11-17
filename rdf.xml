@@ -1,19 +1,19 @@
 <list_rdf>
  <rdf>
    <result>
-    <binding name="s"><uri>http://dbpedia.org/resource/Michelle_Obama</uri></binding>
-    <binding name="p"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
-    <binding name="o"><uri>http://www.w3.org/2002/07/owl#Thing</uri></binding>
+    <s><uri>http://dbpedia.org/resource/Michelle_Obama</uri></s>
+    <p><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></p>
+    <o><uri>http://www.w3.org/2002/07/owl#Thing</uri></o>
    </result>
    <result>
-    <binding name="s"><uri>http://dbpedia.org/resource/Michelle_Obama</uri></binding>
-    <binding name="p"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
-    <binding name="o"><uri>http://xmlns.com/foaf/0.1/Person</uri></binding>
+    <s><uri>http://dbpedia.org/resource/Michelle_Obama</uri></s>
+    <p><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></p>
+    <o><uri>http://xmlns.com/foaf/0.1/Person</uri></o>
    </result>
    <result>
-    <binding name="s"><uri>http://dbpedia.org/resource/Michelle_Obama</uri></binding>
-    <binding name="p"><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></binding>
-    <binding name="o"><uri>http://dbpedia.org/ontology/Person</uri></binding>
+    <s><uri>http://dbpedia.org/resource/Michelle_Obama</uri></s>
+    <p><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></p>
+    <o><uri>http://dbpedia.org/ontology/Person</uri></o>
    </result>
   </rdf>
 </list_rdf>
