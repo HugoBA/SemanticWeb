@@ -15,108 +15,166 @@
  */
 
 
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.*;
+import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.dbpedia.spotlight.exceptions.AnnotationException;
 import org.dbpedia.spotlight.model.DBpediaResource;
 import org.dbpedia.spotlight.model.Text;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.LinkedList;
+import java.io.*;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Simple web service-based annotation client for DBpedia Spotlight.
+ * This class has been translate to scala. Please use the AnnotationClientScala.scala for new External Clients!
+ * (AnnotationClientScala.scala is at eval/src/main/scala/org/dbpedia/spotlight/evaluation/external/)
  *
- * @author pablomendes, Joachim Daiber
+ * @author pablomendes
  */
 
-public class DBpediaSpotlightClient extends AnnotationClient {
+public abstract class AnnotationClient {
 
-	//private final static String API_URL = "http://jodaiber.dyndns.org:2222/";
-    private final static String API_URL = "http://spotlight.dbpedia.org/";
-	private static final double CONFIDENCE = 0.3;
-	private static final int SUPPORT = 0;
+    public Logger LOG = Logger.getLogger(this.getClass());
+    
+    // Create an instance of HttpClient.
+    private static HttpClient client = new HttpClient();
 
-	@Override
-	public List<DBpediaResource> extract(Text text) throws AnnotationException {
 
-        LOG.info("Querying API.");
-		String spotlightResponse;
-		try {
-			GetMethod getMethod = new GetMethod(API_URL + "rest/annotate/?" +
-					"confidence=" + CONFIDENCE
-					+ "&support=" + SUPPORT
-					+ "&text=" + URLEncoder.encode(text.text(), "utf-8"));
-			getMethod.addRequestHeader(new Header("Accept", "application/json"));
+    public String request(HttpMethod method) throws AnnotationException {
 
-			spotlightResponse = request(getMethod);
-		} catch (UnsupportedEncodingException e) {
-			throw new AnnotationException("Could not encode text.", e);
-		}
+        String response = null;
 
-		assert spotlightResponse != null;
+        // Provide custom retry handler is necessary
+        method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
+                new DefaultHttpMethodRetryHandler(3, false));
 
-		JSONObject resultJSON = null;
-		JSONArray entities = null;
+        try {
+            // Execute the method.
+            int statusCode = client.executeMethod(method);
 
-		try {
-			resultJSON = new JSONObject(spotlightResponse);
-			entities = resultJSON.getJSONArray("Resources");
-		} catch (JSONException e) {
-			throw new AnnotationException("Received invalid response from DBpedia Spotlight API.");
-		}
-
-		LinkedList<DBpediaResource> resources = new LinkedList<DBpediaResource>();
-		for(int i = 0; i < entities.length(); i++) {
-			try {
-				JSONObject entity = entities.getJSONObject(i);
-				resources.add(
-						new DBpediaResource(entity.getString("@URI"),
-								Integer.parseInt(entity.getString("@support"))));
-
-			} catch (JSONException e) {
-                LOG.error("JSON exception "+e);
+            if (statusCode != HttpStatus.SC_OK) {
+                LOG.error("Method failed: " + method.getStatusLine());
             }
 
-		}
+            // Read the response body.
+            byte[] responseBody = method.getResponseBody(); //TODO Going to buffer response body of large or unknown size. Using getResponseBodyAsStream instead is recommended.
 
+            // Deal with the response.
+            // Use caution: ensure correct character encoding and is not binary data
+            response = new String(responseBody);
 
-		return resources;
-	}
-        public static void main(String[] args) throws Exception {
-
-
-        DBpediaSpotlightClient c = new DBpediaSpotlightClient ();
-
-//        File input = new File("/home/pablo/eval/manual/AnnotationText.txt");
-//        File output = new File("/home/pablo/eval/manual/systems/Spotlight.list");
-
-        //File input = new File("/home/pablo/eval/cucerzan/cucerzan.txt");
-        //File output = new File("/home/pablo/eval/cucerzan/systems/cucerzan-Spotlight.set");
-
-//        File input = new File("/home/pablo/eval/wikify/gold/WikifyAllInOne.txt");
-//        File output = new File("/home/pablo/eval/wikify/systems/Spotlight.list");
-
-        File input = new File("/home/alexandre/Projects/test-files-spotlight/ExternalClients_TestFiles/Berlin.txt");
-        File output = new File("/home/alexandre/Projects/test-files-spotlight/ExternalClients_TestFiles/Spotlight.list");
-
-
-        c.evaluate(input, output);
-
-
-//        SpotlightClient c = new SpotlightClient(api_key);
-//        List<DBpediaResource> response = c.extract(new Text(text));
-//        PrintWriter out = new PrintWriter(manualEvalDir+"AnnotationText-Spotlight.txt.set");
-//        System.out.println(response);
+        } catch (HttpException e) {
+            LOG.error("Fatal protocol violation: " + e.getMessage());
+            throw new AnnotationException("Protocol error executing HTTP request.",e);
+        } catch (IOException e) {
+            LOG.error("Fatal transport error: " + e.getMessage());
+            LOG.error(method.getQueryString());
+            throw new AnnotationException("Transport error executing HTTP request.",e);
+        } finally {
+            // Release the connection.
+            method.releaseConnection();
+        }
+        return response;
 
     }
 
+    protected static String readFileAsString(String filePath) throws java.io.IOException{
+        return readFileAsString(new File(filePath));
+    }
+    
+    protected static String readFileAsString(File file) throws IOException {
+        byte[] buffer = new byte[(int) file.length()];
+        BufferedInputStream f = new BufferedInputStream(new FileInputStream(file));
+        f.read(buffer);
+        return new String(buffer);
+    }
+
+    static abstract class LineParser {
+
+        public abstract String parse(String s) throws ParseException;
+
+        static class ManualDatasetLineParser extends LineParser {
+            public String parse(String s) throws ParseException {
+                return s.trim();
+            }
+        }
+
+        static class OccTSVLineParser extends LineParser {
+            public String parse(String s) throws ParseException {
+                String result = s;
+                try {
+                    result = s.trim().split("\t")[3];
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    throw new ParseException(e.getMessage(), 3);
+                }
+                return result; 
+            }
+        }
+    }
+
+    public void saveExtractedEntitiesSet(File inputFile, File outputFile, LineParser parser, int restartFrom) throws Exception {
+        PrintWriter out = new PrintWriter(outputFile);
+        LOG.info("Opening input file "+inputFile.getAbsolutePath());
+        String text = readFileAsString(inputFile);
+        int i=0;
+        int correct =0 ;
+        int error = 0;
+        int sum = 0;
+        for (String snippet: text.split("\n")) {
+            String s = parser.parse(snippet);
+            if (s!= null && !s.equals("")) {
+                i++;
+
+                if (i<restartFrom) continue;
+
+                List<DBpediaResource> entities = new ArrayList<DBpediaResource>();
+                try {
+                    final long startTime = System.nanoTime();
+                    entities = extract(new Text(snippet.replaceAll("\\s+"," ")));
+                    final long endTime = System.nanoTime();
+                    sum += endTime - startTime;
+                    LOG.info(String.format("(%s) Extraction ran in %s ns.", i, endTime - startTime));
+                    correct++;
+                } catch (AnnotationException e) {
+                    error++;
+                    LOG.error(e);
+                    e.printStackTrace();
+                }
+                for (DBpediaResource e: entities) {
+                    out.println(e.uri());
+                }
+                out.println();
+                out.flush();
+            }
+        }
+        out.close();
+        LOG.info(String.format("Extracted entities from %s text items, with %s successes and %s errors.", i, correct, error));
+        LOG.info("Results saved to: "+outputFile.getAbsolutePath());
+        double avg = (new Double(sum) / i);
+        LOG.info(String.format("Average extraction time: %s ms", avg * 1000000));
+    }
 
 
+    public void evaluate(File inputFile, File outputFile) throws Exception {
+        evaluateManual(inputFile,outputFile,0);
+    }
+
+    public void evaluateManual(File inputFile, File outputFile, int restartFrom) throws Exception {
+         saveExtractedEntitiesSet(inputFile, outputFile, new LineParser.ManualDatasetLineParser(), restartFrom);
+    }
+
+//    public void evaluateCurcerzan(File inputFile, File outputFile) throws Exception {
+//         saveExtractedEntitiesSet(inputFile, outputFile, new LineParser.OccTSVLineParser());
+//    }
+
+    /**
+     * Entity extraction code.
+     * @param text
+     * @return
+     */
+    public abstract List<DBpediaResource> extract(Text text) throws AnnotationException;
 }
