@@ -5,6 +5,11 @@
  */
 package sparql_projet;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
@@ -25,13 +30,25 @@ public class Sparql_projet {
         
         String queryString = makeQuery(uris);
         
-        URL url = new URL("http://stackoverflow.com");
+        URL url = null;
+		try {
+			url = new URL("http://dbpedia.org/sparql?default-graph-uri=http%3A%2F%2Fdbpedia.org&query=SELECT+*+WHERE+%7B+%3Fs+%3Fp+%3Fo.+FILTER%28%3Fs+in+%28%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2FStudent%3E%2C+%3Chttp%3A%2F%2Fdbpedia.org%2Fresource%2FMichelle_Obama%3E%29%29+%7D+&format=json&timeout=30000"");
+		} catch (MalformedURLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"))) {
             for (String line; (line = reader.readLine()) != null;) {
                 System.out.println(line);
             }
-        }
+        } catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
         
        
