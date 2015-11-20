@@ -7,13 +7,21 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import org.apache.commons.lang.StringUtils;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 
 /**
@@ -46,10 +54,26 @@ public class sparql {
 			//System.out.println(queryString);
 			e1.printStackTrace();
 		}
-
+		
+		String resultString = "";
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(),"UTF-8"))) {
             for (String line; (line = reader.readLine()) != null;) {
-                System.out.println(line);
+               if(line.contains("variable")){}
+               else if(line.contains("<head>")){}
+               else if(line.contains("</head>")){}
+               else if(line.contains("<results distinct=\"false\" ordered=\"true\">")){line="<rdf>";resultString+=line;}
+               else if(line.contains("</results>")){line="</rdf>";resultString+=line;}
+               else if(line.contains("<result>")){line="<triplet>";resultString+=line;}
+               else if(line.contains("</result>")){line="</triplet>";resultString+=line;}
+               else if(line.contains("<binding name=\"s\">")){line="<s>" + line.substring(21, line.length()-10) + "</s>";resultString+=line;}
+               else if(line.contains("<binding name=\"p\">")){line="<p>" + line.substring(21, line.length()-10) + "</p>";resultString+=line;}
+               else if(line.contains("<binding name=\"o\">")){line="<o>" + line.substring(21, line.length()-10) + "</o>";resultString+=line;}
+               else if(line.contains("<sparql")){line="<list_rdf>"; resultString+=line;}
+               else if(line.contains("</sparql>")){line="</list_rdf>"; resultString+=line;}
+               
+               PrintWriter out = new PrintWriter("output_sparql.xml");
+               out.println(resultString);
+               out.close();
             }
         } catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
@@ -58,7 +82,7 @@ public class sparql {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
+        System.out.println(resultString);
     }
     
     public static String makeQuery(ArrayList<String> uris) throws UnsupportedEncodingException{
@@ -79,6 +103,24 @@ public class sparql {
         return encodedQuery;
     }
     
-    
+    public static Document createDOM(String input){
+    	DocumentBuilder db = null;
+    	Document doc = null;
+		try {
+			db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	InputSource is = new InputSource();
+    	is.setCharacterStream(new StringReader(input));
+		try {
+			doc = db.parse(is);
+		} catch (SAXException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return doc;
+    }
     
 }
