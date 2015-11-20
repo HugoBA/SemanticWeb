@@ -11,48 +11,183 @@ package Enrichissement;
  */
 import java.io.*;
 
-import org.jdom.input.SAXBuilder;
-import org.jdom2.*;
-import org.jdom2.input.*;
-import org.jdom2.filter.*;
-import java.util.List;
-import java.util.Iterator;
+    import org.jdom2.input.SAXBuilder;
+    import org.jdom2.*;
+    import org.jdom2.input.*;
+    import org.jdom2.filter.*;
+    import java.util.List;
+    import java.util.Iterator;
 
 
 public class Jaccard {
+
     /**
      * @param args the command line arguments
      */
     
-     static org.jdom.Document document;
-     static org.jdom.Element racine;
     
-    //static boolean matches
+    
+    static org.jdom2.Document document;
+    static org.jdom2.Element racine;
+    static double[][] mat;
+    
     public static void main(String[] args) {
-         SAXBuilder sxb = new SAXBuilder();
+        // TODO code application logic here
+        ouvrirDoc();
+        
+        List listRDF = racine.getChildren("rdf");  
+        
+        int nbRDF=listRDF.size();
+        
+        initMatrice(nbRDF);                             
+           
+        int i=0;
+        int j;          
+        for (Iterator iRDF = listRDF.iterator(); iRDF.hasNext(); i++)     
+        {
+            Element curRDF1=(Element)iRDF.next();
+            j=0;
+
+            for (Iterator jRDF = listRDF.iterator(); jRDF.hasNext(); j++)
+            {
+                Element curRDF2=(Element)jRDF.next();
+
+
+            if(i!=j)
+            {
+                List listTriplet1=curRDF1.getChildren("triplet");
+                double nbTriplet1=listTriplet1.size();
+                Iterator iTriplet=listTriplet1.iterator();
+                List listTriplet2=curRDF2.getChildren("triplet");
+                double nbTriplet=nbTriplet1+listTriplet2.size();
+                Iterator jTriplet=listTriplet2.iterator();
+                while(iTriplet.hasNext())
+                {
+                    Element curTriplet1=(Element)iTriplet.next();
+                    while(jTriplet.hasNext())
+                    {
+                        Element curTriplet2=(Element)jTriplet.next();
+                        System.out.println(curTriplet1.getChild("o").getChild("uri").getText());
+                        System.out.println(curTriplet2.getChild("o").getChild("uri").getText());
+                        if(comparerTriplet(curTriplet1,curTriplet2))
+                        {
+
+                            System.out.println(i+" + "+j+" true" );
+                            System.out.println(nbTriplet);
+                            System.out.println(1.0/nbTriplet);
+                            mat[i][j]+=(1./nbTriplet);
+
+                        }
+                        else
+                        {
+                            System.out.println(i+" + "+j+" false" );
+                        }
+                    }
+                }
+
+
+            }
+
+        }
+
+
+    }         
+            afficherMatrice(mat, nbRDF);
+    }
+    
+    private static void ouvrirDoc()
+    {
+        SAXBuilder sxb = new SAXBuilder();
             try
             {
                //On crée un nouveau document JDOM avec en argument le fichier XML
                //Le parsing est terminé ;)
                document = sxb.build(new File("rdf.xml"));
+               System.out.println("Fichier ouvert");
             }
-            catch(Exception e){}
+            catch(Exception e){e.printStackTrace();}
 
             //On initialise un nouvel élément racine avec l'élément racine du document.
             racine = document.getRootElement();
-            List listRDF = racine.getChildren("rdf");
-          
-            int tailleRDF=listRDF.size();
-            
-          //matrice indice de jaccard
-            double[][] mat= new double[tailleRDF][tailleRDF];
-            Iterator i = listRDF.iterator();
-            Iterator j = listRDF.iterator(); 
-                
-            while(i.hasNext())
-            {
-                
-            }
+    }
     
-}
+    private static void initMatrice(int dim)
+    {
+          mat= new double[dim][dim];
+         for(int i=0; i<dim; i++)
+         {
+            mat[i][i]=1;                
+         }
+
+
+    }
+    
+    private static void afficherMatrice(double mat[][], int dim)
+    {
+        System.out.println("Matrice de similarité");
+        for(int i=0; i<dim; i++)
+        {
+            for(int j=0; j<dim; j++)
+            {
+                System.out.print("|"+mat[i][j]);
+            }
+            System.out.println("|");
+        }
+    }
+    private static boolean comparerTriplet(Element triplet1, Element triplet2)
+    {
+        String s1=triplet1.getChild("s").getChildText("uri");
+        String s2=triplet2.getChild("s").getChildText("uri");
+        String p1=triplet1.getChild("p").getChildText("uri");
+        String p2=triplet2.getChild("p").getChildText("uri");
+        Element o1=triplet1.getChild("o");
+        Element o2=triplet2.getChild("o");
+        if(!s1.equals(s2)){return false;}
+        else if(!p1.equals(p2)){return false;}
+        else if(!comparerObjet(o1, o2)){return false;}
+       return true;
+    }
+    
+    private static boolean comparerObjet(Element triplet1, Element triplet2)
+    {
+        Element uri1=triplet1.getChild("uri");
+        Element uri2=triplet2.getChild("uri");
+        Element literal1=triplet1.getChild("literal");
+        Element literal2=triplet1.getChild("literal");
+        if((uri1==null && uri2!=null) ||(uri2==null && uri1!=null))
+        {
+            return false;
+        }
+        else if(uri1!=null && uri2!=null)
+        {
+            String uri1text=uri1.getText();          
+            String uri2text=uri2.getText();
+            if(!(uri1text.equals(uri2text)))
+            {
+                return false;
+            }
+        }
+        else if(literal1!=null && literal2!=null)
+        {
+            String lang1=literal1.getAttributeValue("lang", Namespace.XML_NAMESPACE);
+            String lang2=literal2.getAttributeValue("lang", Namespace.XML_NAMESPACE);
+            String literal1Text=literal1.getText();
+            String literal2Text=literal2.getText();
+
+            if(!lang1.equals(lang2))
+            {
+                return false;
+            }
+            else if(!literal1Text.equals(literal2Text))
+            {
+               
+                return false;
+
+            }
+               
+        }
+        return true;
+
+       
+    }
 }
