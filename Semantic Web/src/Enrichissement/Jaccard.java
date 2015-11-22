@@ -13,8 +13,6 @@ import java.io.*;
 
     import org.jdom2.input.SAXBuilder.*;
     import org.jdom2.*;
-    import org.jdom2.input.*;
-    import org.jdom2.filter.*;
     import java.util.List;
     import java.util.Iterator;
 
