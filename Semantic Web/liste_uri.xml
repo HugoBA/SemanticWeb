@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<listeURI>
+  <texte id="0" url="url0">
+    <URI>http://dbpedia.org/resource/East_Berlin</URI>
+    <URI>http://dbpedia.org/resource/Capital_city</URI>
+    <URI>http://dbpedia.org/resource/Kingdom_of_Prussia</URI>
+    <URI>http://dbpedia.org/resource/German_Empire</URI>
+    <URI>http://dbpedia.org/resource/Weimar_Republic</URI>
+    <URI>http://dbpedia.org/resource/Nazi_Germany</URI>
+    <URI>http://dbpedia.org/resource/Municipality</URI>
+    <URI>http://dbpedia.org/resource/City</URI>
+    <URI>http://dbpedia.org/resource/East_Berlin</URI>
+    <URI>http://dbpedia.org/resource/Berlin</URI>
+    <URI>http://dbpedia.org/resource/West_Berlin</URI>
+    <URI>http://dbpedia.org/resource/West_Germany</URI>
+    <URI>http://dbpedia.org/resource/Enclave_and_exclave</URI>
+    <URI>http://dbpedia.org/resource/Berlin_Wall</URI>
+    <URI>http://dbpedia.org/resource/German_reunification</URI>
+    <URI>http://dbpedia.org/resource/City</URI>
+    <URI>http://dbpedia.org/resource/Status_quo</URI>
+    <URI>http://dbpedia.org/resource/Foreign_policy</URI>
+    <URI>http://dbpedia.org/resource/Diplomatic_mission</URI>
+  </texte>
+  <texte id="1" url="url1">
+    <URI>http://dbpedia.org/resource/Leonardo_da_Vinci</URI>
+    <URI>http://dbpedia.org/resource/Leonardo_da_Vinci</URI>
+    <URI>http://dbpedia.org/resource/Italian_people</URI>
+    <URI>http://dbpedia.org/resource/Italian_people</URI>
+    <URI>http://dbpedia.org/resource/Polymath</URI>
+    <URI>http://dbpedia.org/resource/Painting</URI>
+    <URI>http://dbpedia.org/resource/Sculpture</URI>
+    <URI>http://dbpedia.org/resource/Architecture</URI>
+    <URI>http://dbpedia.org/resource/Science</URI>
+    <URI>http://dbpedia.org/resource/Music</URI>
+    <URI>http://dbpedia.org/resource/Mathematics</URI>
+    <URI>http://dbpedia.org/resource/Engineering</URI>
+    <URI>http://dbpedia.org/resource/Literature</URI>
+    <URI>http://dbpedia.org/resource/Anatomy</URI>
+    <URI>http://dbpedia.org/resource/Geology</URI>
+    <URI>http://dbpedia.org/resource/Astronomy</URI>
+    <URI>http://dbpedia.org/resource/Botany</URI>
+    <URI>http://dbpedia.org/resource/History</URI>
+    <URI>http://dbpedia.org/resource/Cartography</URI>
+    <URI>http://dbpedia.org/resource/Architecture</URI>
+    <URI>http://dbpedia.org/resource/Painting</URI>
+    <URI>http://dbpedia.org/resource/Helicopter</URI>
+    <URI>http://dbpedia.org/resource/Genius</URI>
+    <URI>http://dbpedia.org/resource/Renaissance_humanism</URI>
+  </texte>
+  <texte id="2" url="url2">
+    <URI>http://dbpedia.org/resource/Moskva_River</URI>
+    <URI>http://dbpedia.org/resource/Moskva_River</URI>
+    <URI>http://dbpedia.org/resource/City_limits</URI>
+    <URI>http://dbpedia.org/resource/Moskva_River</URI>
+    <URI>http://dbpedia.org/resource/Independent_city</URI>
+    <URI>http://dbpedia.org/resource/Russia</URI>
+    <URI>http://dbpedia.org/resource/Saint_Petersburg</URI>
+  </texte>
+</listeURI>

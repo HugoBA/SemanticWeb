@@ -39,8 +39,7 @@ public class InteractionXML {
 	    StreamResult sortie = null;
 		try {
 			System.out.println(directory.getCanonicalPath() + File.separator + nomFichier);
-			sortie = new StreamResult(new File(directory.getCanonicalPath() + File.separator + nomFichier));
-			System.out.println(directory.getCanonicalPath() + File.separator + nomFichier);
+			sortie = new StreamResult(new File(nomFichier).getPath());
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
