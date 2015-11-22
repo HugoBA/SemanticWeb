@@ -11,7 +11,7 @@ package Enrichissement;
  */
 import java.io.*;
 
-    import org.jdom2.input.SAXBuilder;
+    import org.jdom2.input.SAXBuilder.*;
     import org.jdom2.*;
     import org.jdom2.input.*;
     import org.jdom2.filter.*;
@@ -25,11 +25,12 @@ public class Jaccard {
      * @param args the command line arguments
      */
     
-    
-    
     static org.jdom2.Document document;
     static org.jdom2.Element racine;
     static double[][] mat;
+    static double[][] carUnion;
+    static int nbRDF;
+    
     
     public static void main(String[] args) {
         // TODO code application logic here
@@ -37,9 +38,9 @@ public class Jaccard {
         
         List listRDF = racine.getChildren("rdf");  
         
-        int nbRDF=listRDF.size();
+        nbRDF=listRDF.size();
         
-        initMatrice(nbRDF);                             
+        initMatrices();                             
            
         int i=0;
         int j;          
@@ -55,45 +56,17 @@ public class Jaccard {
 
             if(i!=j)
             {
-                List listTriplet1=curRDF1.getChildren("triplet");
-                double nbTriplet1=listTriplet1.size();
-                Iterator iTriplet=listTriplet1.iterator();
-                List listTriplet2=curRDF2.getChildren("triplet");
-                double nbTriplet=nbTriplet1+listTriplet2.size();
-                Iterator jTriplet=listTriplet2.iterator();
-                while(iTriplet.hasNext())
-                {
-                    Element curTriplet1=(Element)iTriplet.next();
-                    while(jTriplet.hasNext())
-                    {
-                        Element curTriplet2=(Element)jTriplet.next();
-                        System.out.println(curTriplet1.getChild("o").getChild("uri").getText());
-                        System.out.println(curTriplet2.getChild("o").getChild("uri").getText());
-                        if(comparerTriplet(curTriplet1,curTriplet2))
-                        {
-
-                            System.out.println(i+" + "+j+" true" );
-                            System.out.println(nbTriplet);
-                            System.out.println(1.0/nbTriplet);
-                            mat[i][j]+=(1./nbTriplet);
-
-                        }
-                        else
-                        {
-                            System.out.println(i+" + "+j+" false" );
-                        }
-                    }
-                }
-
-
+                comparerRDF(curRDF1, i, curRDF2, j);
             }
-
         }
 
-
-    }         
-            afficherMatrice(mat, nbRDF);
-    }
+            
+    }   
+    diviserMatrices();     
+    afficherMatrice(mat, nbRDF);
+ }
+    		
+    
     
     private static void ouvrirDoc()
     {
@@ -111,13 +84,15 @@ public class Jaccard {
             racine = document.getRootElement();
     }
     
-    private static void initMatrice(int dim)
+    private static void initMatrices()
     {
-          mat= new double[dim][dim];
-         for(int i=0; i<dim; i++)
-         {
-            mat[i][i]=1;                
-         }
+    	carUnion= new double[nbRDF][nbRDF];
+        mat= new double[nbRDF][nbRDF];
+        for(int i=0; i<nbRDF; i++)
+        {
+           mat[i][i]=1;
+           carUnion[i][i]=1;
+        }
 
 
     }
@@ -134,6 +109,42 @@ public class Jaccard {
             System.out.println("|");
         }
     }
+    
+    private static void diviserMatrices()
+    {
+    	for(int i=0; i<nbRDF;i++){
+			for(int j=0; j<nbRDF;j++){
+				mat[i][j]=mat[i][j]/carUnion[i][j];
+			}
+    	}
+    }
+    
+    private static void comparerRDF(Element rdf1, int i, Element rdf2, int j)
+    {
+        List listTriplet1=rdf1.getChildren("triplet");
+        List listTriplet2=rdf2.getChildren("triplet");
+                  
+        carUnion[i][j]=listTriplet1.size()+listTriplet2.size();           
+        
+        for (Iterator iTriplet = listTriplet1.iterator(); iTriplet.hasNext();) 
+        {
+
+            Element curTriplet1=(Element)iTriplet.next();
+            
+            for(Iterator jTriplet = listTriplet2.iterator(); jTriplet.hasNext();)
+            {
+                Element curTriplet2=(Element)jTriplet.next();
+                
+                if(comparerTriplet(curTriplet1,curTriplet2))
+                { 
+                    mat[i][j]+=1.0;
+                    carUnion[i][j]-=1;
+                }
+               
+            }
+        }
+    }
+    
     private static boolean comparerTriplet(Element triplet1, Element triplet2)
     {
         String s1=triplet1.getChild("s").getChildText("uri");
@@ -146,6 +157,14 @@ public class Jaccard {
         else if(!p1.equals(p2)){return false;}
         else if(!comparerObjet(o1, o2)){return false;}
        return true;
+    }
+    
+    private static boolean comparerTripletObjet(Element triplet1, Element triplet2)
+    {
+        Element o1=triplet1.getChild("o");
+        Element o2=triplet2.getChild("o");
+        if(!comparerObjet(o1, o2)){return false;}
+        return true;
     }
     
     private static boolean comparerObjet(Element triplet1, Element triplet2)
