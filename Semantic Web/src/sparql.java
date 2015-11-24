@@ -6,6 +6,7 @@
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -36,74 +37,40 @@ public class sparql {
 
     /**
      * @param args the command line arguments
+     * @throws UnsupportedEncodingException 
+     * @throws MalformedURLException 
+     * @throws FileNotFoundException 
      */
-    public static void main(String[] args) {
-    	ArrayList<TexteURI> extractedURIs = extractURI("/home/ling/Documents/test.xml");
-    	ArrayList<String> uris = new ArrayList<String>();
-        for(TexteURI t:extractedURIs){
-        	for(String uri:t.uris){
-        		uris.add(uri);
-        		
-        	}        	
-        }
+    public static void main(String[] args) throws UnsupportedEncodingException, MalformedURLException, FileNotFoundException {
+    	ArrayList<TexteURI> extractedURIs = extractURI("liste_uri.xml");
+    	ArrayList<String> queries = makeQueries(extractedURIs);
+    	ArrayList<String> urls = extractUrl(extractedURIs); 
+    	String result = "";
     	
-        String queryString = "";
-        
-        
-        try {
-			queryString = makeQuery(uris);
-			
-		} catch (UnsupportedEncodingException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-        
-        URL url = null;
-		try {
-			url = new URL(queryString);
-		} catch (MalformedURLException e1) {
-			//System.out.println(queryString);
-			e1.printStackTrace();
-		}
-		
-		String resultString = "";
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(),"UTF-8"))) {
-            for (String line; (line = reader.readLine()) != null;) {
-               if(line.contains("variable")){}
-               else if(line.contains("<head>")){}
-               else if(line.contains("</head>")){}
-               else if(line.contains("<results distinct=\"false\" ordered=\"true\">")){line="<rdf>";resultString+=line;}
-               else if(line.contains("</results>")){line="</rdf>";resultString+=line;}
-               else if(line.contains("<result>")){line="<triplet>";resultString+=line;}
-               else if(line.contains("</result>")){line="</triplet>";resultString+=line;}
-               else if(line.contains("<binding name=\"s\">")){line="<s>" + line.substring(21, line.length()-10) + "</s>";resultString+=line;}
-               else if(line.contains("<binding name=\"p\">")){line="<p>" + line.substring(21, line.length()-10) + "</p>";resultString+=line;}
-               else if(line.contains("<binding name=\"o\">")){line="<o>" + line.substring(21, line.length()-10) + "</o>";resultString+=line;}
-               else if(line.contains("<sparql")){line="<list_rdf>"; resultString+=line;}
-               else if(line.contains("</sparql>")){line="</list_rdf>"; resultString+=line;}
-               
-               PrintWriter out = new PrintWriter("output_sparql.xml");
-               out.println(resultString);
-               out.close();
-            }
-        } catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        System.out.println(resultString);
-        
+    	for(int i=0;i<queries.size();i++){
+    		System.out.println(queries.get(i));
+    		result += query(queries.get(i),urls.get(i));  
+    		
+    		
+    	}
+    	result = "<list_rdf>" + result;
+    	result = result + "</list_rdf>";
+    	
+    	PrintWriter out = new PrintWriter("output_sparql.xml");
+        out.println(result);
+        out.close();   
         
     }
     
-    public static String makeQuery(ArrayList<String> uris) throws UnsupportedEncodingException{
+   
+    
+    public static String makeQuery(TexteURI t) throws UnsupportedEncodingException{
     	String queryEnd = "&format=xml&timeout=30000";
         String queryString = "SELECT * WHERE { ?s ?p ?o. FILTER(?s in (";
         String encodedQuery = "";
         
-        for(String s : uris){
+        
+        for(String s : t.uris){
             queryString += "<" + s + ">" + ", ";
         }
         
@@ -114,6 +81,45 @@ public class sparql {
         				+URLEncoder.encode(queryString,"UTF-8")+queryEnd;
 
         return encodedQuery;
+    }
+    
+    public static ArrayList<String> makeQueries(ArrayList<TexteURI> t) throws UnsupportedEncodingException{
+    	ArrayList<String> res = new ArrayList<String>();
+    	for(TexteURI texte:t){
+    		String s = makeQuery(texte);
+    		res.add(s);
+    	}
+    	return res;
+    }
+    
+    public static String query(String query,String u) throws MalformedURLException{
+    	String resultString = "";
+    	URL url = new URL(query);
+    	try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream(),"UTF-8"))) {
+            for (String line; (line = reader.readLine()) != null;) {
+               if(line.contains("variable")){}
+               else if(line.contains("<head>")){}
+               else if(line.contains("</head>")){}
+               else if(line.contains("<results distinct=\"false\" ordered=\"true\">")){line="<rdf url=\""+u+"\">";resultString+=line;}
+               else if(line.contains("</results>")){line="</rdf>";resultString+=line;}
+               else if(line.contains("<result>")){line="<triplet>";resultString+=line;}
+               else if(line.contains("</result>")){line="</triplet>";resultString+=line;}
+               else if(line.contains("<binding name=\"s\">")){line="<s>" + line.substring(21, line.length()-10) + "</s>";resultString+=line;}
+               else if(line.contains("<binding name=\"p\">")){line="<p>" + line.substring(21, line.length()-10) + "</p>";resultString+=line;}
+               else if(line.contains("<binding name=\"o\">")){line="<o>" + line.substring(21, line.length()-10) + "</o>";resultString+=line;}
+               else if(line.contains("<sparql")){}
+               else if(line.contains("</sparql>")){}
+               
+               
+            }
+        } catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return resultString;
     }
     
     public static Document createDOM(String input){
@@ -136,6 +142,14 @@ public class sparql {
     	return doc;
     }
     
+    public static ArrayList<String> extractUrl(ArrayList<TexteURI> t){
+    	ArrayList<String> res = new ArrayList<String>();
+    	for(TexteURI texte:t){
+    		res.add(texte.url);
+    	}
+    	return res;
+    	
+    }
     public static ArrayList<TexteURI> extractURI(String filePath){
     	ArrayList<TexteURI> uris = new ArrayList<TexteURI>();
     	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -157,10 +171,10 @@ public class sparql {
 			e.printStackTrace();
 		}
     	
-    	NodeList texts = doc.getElementsByTagName("Texte");
+    	NodeList texts = doc.getElementsByTagName("texte");
     	for(int i = 0;i < texts.getLength();i++){
     		Element text = (Element) texts.item(i);
-    		TexteURI t = new TexteURI(Integer.parseInt(text.getAttribute("TextId")),text.getAttribute("url"));
+    		TexteURI t = new TexteURI(Integer.parseInt(text.getAttribute("id")),text.getAttribute("url"));
     		for(int j = 0;j < text.getChildNodes().getLength();j++){
     			if(text.getChildNodes().item(j).getNodeType()==Node.ELEMENT_NODE){
 	    			String uri = (String) text.getChildNodes().item(j).getTextContent();
