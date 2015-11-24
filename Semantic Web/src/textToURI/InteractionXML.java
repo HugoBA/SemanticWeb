@@ -3,8 +3,8 @@ package textToURI;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -65,7 +65,7 @@ public class InteractionXML {
 	}
 
 	
-	public void sortieFichier(String nomFichier, Map<Cle, List<String>> listeURI) throws TransformerConfigurationException{
+	public void sortieFichier(String nomFichier, Map<Cle, Set<String>> listeURI) throws TransformerConfigurationException{
 		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		
@@ -79,9 +79,9 @@ public class InteractionXML {
 				texte.setAttribute("id", String.valueOf(cle.getId()));
 				texte.setAttribute("url", String.valueOf(cle.getUrl()));
 				racine.appendChild(texte);
-				for (int i = 0; i < listeURI.get(cle).size(); i++){
+				for (String uriUnique : listeURI.get(cle)){
 					Element uri = xmlSortie.createElement("URI");
-					uri.setTextContent(listeURI.get(cle).get(i));
+					uri.setTextContent(uriUnique);
 					texte.appendChild(uri);
 				}
 			}

@@ -3,8 +3,10 @@ package textToURI;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.xml.transform.TransformerConfigurationException;
 
@@ -29,26 +31,27 @@ public class Main {
 		DBpediaSpotlightClient dBpediaSpotlightClient = new DBpediaSpotlightClient();	
 				
 		Map<Cle, String> entree;
-		Map<Cle, List<String>> sortie = new HashMap<Cle, List<String>>();
+		Map<Cle, Set<String>> sortie = new HashMap<Cle, Set<String>>();
 		try {
 			entree = interact.entreeFichier(NOMFICHIERENTREE);
 			for (Cle cle : entree.keySet()){
 				String texte = entree.get(cle);
 				Text description = new Text(texte);
-				System.out.println(texte);
 				
 				List<DBpediaResource> list = dBpediaSpotlightClient.extract(description);
-				System.out.println("Size ::: " + list.size());
-				System.out.println(list.toString());
 				List<String> uriList = new ArrayList<String>();
 				for(DBpediaResource rsrc: list) 
 				{
 					uriList.add(rsrc.getFullUri());
 				}
-				System.out.println("Size ::: " + uriList.size());
-				System.out.println(uriList.toString());
-				sortie.put(cle, uriList);
+				
+				Set<String> uniquesURI = new HashSet<String>(uriList);
+				
+				sortie.put(cle, uniquesURI);
 			}
+			
+			
+			
 			interact.sortieFichier(NOMFICHIERSORTIE, sortie);
 			
 		} catch (SAXException e1) {
