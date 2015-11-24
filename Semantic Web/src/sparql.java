@@ -5,6 +5,7 @@
  */
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -20,6 +21,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -34,14 +38,21 @@ public class sparql {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ArrayList<String> uris = new ArrayList<String>();
+    	ArrayList<TexteURI> extractedURIs = extractURI("/home/ling/Documents/test.xml");
+    	ArrayList<String> uris = new ArrayList<String>();
+        for(TexteURI t:extractedURIs){
+        	for(String uri:t.uris){
+        		uris.add(uri);
+        		
+        	}        	
+        }
+    	
         String queryString = "";
         
-        uris.add("http://dbpedia.org/resource/Student");
-        uris.add("http://dbpedia.org/resource/Michelle_Obama");
         
         try {
 			queryString = makeQuery(uris);
+			
 		} catch (UnsupportedEncodingException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -83,6 +94,8 @@ public class sparql {
 			e.printStackTrace();
 		}
         System.out.println(resultString);
+        
+        
     }
     
     public static String makeQuery(ArrayList<String> uris) throws UnsupportedEncodingException{
@@ -121,6 +134,44 @@ public class sparql {
 			e.printStackTrace();
 		}
     	return doc;
+    }
+    
+    public static ArrayList<TexteURI> extractURI(String filePath){
+    	ArrayList<TexteURI> uris = new ArrayList<TexteURI>();
+    	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+    	DocumentBuilder db = null;
+    	Document doc = null;
+		try {
+			db = dbf.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	try {
+			doc = db.parse(new File(filePath));
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	NodeList texts = doc.getElementsByTagName("Texte");
+    	for(int i = 0;i < texts.getLength();i++){
+    		Element text = (Element) texts.item(i);
+    		TexteURI t = new TexteURI(Integer.parseInt(text.getAttribute("TextId")),text.getAttribute("url"));
+    		for(int j = 0;j < text.getChildNodes().getLength();j++){
+    			if(text.getChildNodes().item(j).getNodeType()==Node.ELEMENT_NODE){
+	    			String uri = (String) text.getChildNodes().item(j).getTextContent();
+	    			t.addUri(uri);
+    			}
+    		}
+    		uris.add(t);
+    	}
+    	
+    	
+    	return uris;
     }
     
 }
