@@ -17,8 +17,6 @@
 
 import org.apache.commons.httpclient.*;
 import org.apache.commons.httpclient.params.HttpMethodParams;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
 import org.dbpedia.spotlight.exceptions.AnnotationException;
 import org.dbpedia.spotlight.model.DBpediaResource;
@@ -88,7 +86,8 @@ public abstract class AnnotationClient {
     
     protected static String readFileAsString(File file) throws IOException {
         byte[] buffer = new byte[(int) file.length()];
-        BufferedInputStream f = new BufferedInputStream(new FileInputStream(file));
+        @SuppressWarnings("resource")
+		BufferedInputStream f = new BufferedInputStream(new FileInputStream(file));
         f.read(buffer);
         return new String(buffer);
     }
