@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+package textToURI;
 
 import org.apache.commons.httpclient.*;
 import org.apache.commons.httpclient.params.HttpMethodParams;
