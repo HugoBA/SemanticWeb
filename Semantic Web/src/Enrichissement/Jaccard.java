@@ -10,6 +10,7 @@ package Enrichissement;
  * @author zlahjouji
  */
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import Enrichissement.GraphViz;
     import org.jdom2.*;
@@ -83,7 +84,7 @@ public class Jaccard {
             {
                //On crée un nouveau document JDOM avec en argument le fichier XML
                //Le parsing est terminé ;)
-               document = sxb.build(new File("rdf.xml"));
+               document = sxb.build(new File("liste_rdf.xml"));
                System.out.println("Fichier ouvert");
             }
             catch(Exception e){e.printStackTrace();}
@@ -224,7 +225,7 @@ public class Jaccard {
                 for(int j=i; j<nbRDF; j++)
                 {
                     if(mat[i][j]>0 && mat[i][j]<1)
-                    gv.addln(urls.get(i)+"--"+urls.get(j)+"[label=\""+mat[i][j]+"\",weight=\""+mat[i][j]+"\"];");
+                    gv.addln(urls.get(i)+"--"+urls.get(j)+"[label=\""+(new DecimalFormat("#.##").format(mat[i][j]))+"\",weight=\""+(new DecimalFormat("#.##").format(mat[i][j]))+"\"];");
                 }
 
             }

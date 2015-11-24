@@ -20341,7 +20341,7 @@
 <triplet>
 <s><uri>http://dbpedia.org/resource/Enclave_and_exclave</uri></s>
 <p><uri>http://dbpedia.org/property/caption</uri></p>
-<o><literal xml:lang="en">Different territories  are represented by different colours and letters; separated parts of the same territory are represented by the same colour and letter, with a different number added to each smaller part of that t</o>
+<o><literal xml:lang="en">Different territories  are represented by different colours and letters; separated parts of the same territory are represented by the same colour and letter, with a different number added to each smaller part of that t</literal></o>
 </triplet>
 <triplet>
 <s><uri>http://dbpedia.org/resource/West_Germany</uri></s>
@@ -21426,7 +21426,7 @@
 <triplet>
 <s><uri>http://dbpedia.org/resource/German_Empire</uri></s>
 <p><uri>http://dbpedia.org/property/footnotes</uri></p>
-<o><literal xml:lang="en">Area source: Populati</o>
+<o><literal xml:lang="en">Area source: Populati</literal></o>
 </triplet>
 <triplet>
 <s><uri>http://dbpedia.org/resource/German_Empire</uri></s>
@@ -21741,7 +21741,7 @@
 <triplet>
 <s><uri>http://dbpedia.org/resource/Nazi_Germany</uri></s>
 <p><uri>http://dbpedia.org/property/imageMapCaption</uri></p>
-<o><literal xml:lang="en">Germany at the height of World War I</o>
+<o><literal xml:lang="en">Germany at the height of World War I</literal></o>
 </triplet>
 <triplet>
 <s><uri>http://dbpedia.org/resource/Weimar_Republic</uri></s>
@@ -22326,12 +22326,12 @@
 <triplet>
 <s><uri>http://dbpedia.org/resource/German_Empire</uri></s>
 <p><uri>http://dbpedia.org/property/nationalAnthem</uri></p>
-<o><literal xml:lang="en">File:Heil dir im Siegerkranz (</o>
+<o><literal xml:lang="en">File:Heil dir im Siegerkranz (</literal></o>
 </triplet>
 <triplet>
 <s><uri>http://dbpedia.org/resource/German_Empire</uri></s>
 <p><uri>http://dbpedia.org/property/nationalAnthem</uri></p>
-<o><literal xml:lang="en">File:National anthem of Germany - U.S. Army 1st Armored Divisio</o>
+<o><literal xml:lang="en">File:National anthem of Germany - U.S. Army 1st Armored Divisio</literal></o>
 </triplet>
 <triplet>
 <s><uri>http://dbpedia.org/resource/Nazi_Germany</uri></s>

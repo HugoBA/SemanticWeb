@@ -1,81 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <listeURI>
-  <texte id="6" url="url6">
-    <URI>http://dbpedia.org/resource/Nazi_Germany</URI>
-    <URI>http://dbpedia.org/resource/East_Berlin</URI>
+  <texte id="1" url="url1">
+    <URI>http://dbpedia.org/resource/Franz_von_Papen</URI>
+    <URI>http://dbpedia.org/resource/Paul_von_Hindenburg</URI>
+    <URI>http://dbpedia.org/resource/Chancellor</URI>
     <URI>http://dbpedia.org/resource/Weimar_Republic</URI>
-    <URI>http://dbpedia.org/resource/German_Empire</URI>
-    <URI>http://dbpedia.org/resource/Kingdom_of_Prussia</URI>
-  </texte>
-  <texte id="8" url="url8">
-    <URI>http://dbpedia.org/resource/Nazi_Germany</URI>
-    <URI>http://dbpedia.org/resource/East_Berlin</URI>
-    <URI>http://dbpedia.org/resource/Weimar_Republic</URI>
-    <URI>http://dbpedia.org/resource/German_Empire</URI>
-    <URI>http://dbpedia.org/resource/Kingdom_of_Prussia</URI>
+    <URI>http://dbpedia.org/resource/Kurt_von_Schleicher</URI>
+    <URI>http://dbpedia.org/resource/Treaty_of_Versailles</URI>
+    <URI>http://dbpedia.org/resource/Heinrich_Br%C3%BCning</URI>
   </texte>
   <texte id="2" url="url2">
-    <URI>http://dbpedia.org/resource/Moskva_River</URI>
+    <URI>http://dbpedia.org/resource/World_war</URI>
+    <URI>http://dbpedia.org/resource/World_War_I</URI>
+    <URI>http://dbpedia.org/resource/November_11</URI>
+    <URI>http://dbpedia.org/resource/Central_Powers</URI>
+    <URI>http://dbpedia.org/resource/Treaty_of_Versailles</URI>
+    <URI>http://dbpedia.org/resource/July_28</URI>
+    <URI>http://dbpedia.org/resource/Austria-Hungary</URI>
+    <URI>http://dbpedia.org/resource/Triple_Entente</URI>
+    <URI>http://dbpedia.org/resource/British_Empire</URI>
+    <URI>http://dbpedia.org/resource/June_28</URI>
+    <URI>http://dbpedia.org/resource/Allies_of_World_War_I</URI>
+    <URI>http://dbpedia.org/resource/Russian_Empire</URI>
+    <URI>http://dbpedia.org/resource/A-side_and_B-side</URI>
   </texte>
   <texte id="0" url="url0">
-    <URI>http://dbpedia.org/resource/Nazi_Germany</URI>
-    <URI>http://dbpedia.org/resource/East_Berlin</URI>
-    <URI>http://dbpedia.org/resource/Weimar_Republic</URI>
-    <URI>http://dbpedia.org/resource/German_Empire</URI>
-    <URI>http://dbpedia.org/resource/Kingdom_of_Prussia</URI>
-  </texte>
-  <texte id="4" url="url4">
-    <URI>http://dbpedia.org/resource/Nazi_Germany</URI>
-    <URI>http://dbpedia.org/resource/East_Berlin</URI>
-    <URI>http://dbpedia.org/resource/Weimar_Republic</URI>
-    <URI>http://dbpedia.org/resource/German_Empire</URI>
-    <URI>http://dbpedia.org/resource/Kingdom_of_Prussia</URI>
-  </texte>
-  <texte id="10" url="url10">
-    <URI>http://dbpedia.org/resource/Nazi_Germany</URI>
-    <URI>http://dbpedia.org/resource/East_Berlin</URI>
-    <URI>http://dbpedia.org/resource/Weimar_Republic</URI>
-    <URI>http://dbpedia.org/resource/German_Empire</URI>
-    <URI>http://dbpedia.org/resource/Kingdom_of_Prussia</URI>
-  </texte>
-  <texte id="1" url="url1">
-    <URI>http://dbpedia.org/resource/Mathematics</URI>
-    <URI>http://dbpedia.org/resource/Geology</URI>
-    <URI>http://dbpedia.org/resource/Leonardo_da_Vinci</URI>
-    <URI>http://dbpedia.org/resource/Architecture</URI>
-    <URI>http://dbpedia.org/resource/Anatomy</URI>
-    <URI>http://dbpedia.org/resource/Astronomy</URI>
-    <URI>http://dbpedia.org/resource/History</URI>
-    <URI>http://dbpedia.org/resource/Literature</URI>
-    <URI>http://dbpedia.org/resource/Cartography</URI>
-    <URI>http://dbpedia.org/resource/Botany</URI>
-    <URI>http://dbpedia.org/resource/Music</URI>
-    <URI>http://dbpedia.org/resource/Polymath</URI>
-    <URI>http://dbpedia.org/resource/Painting</URI>
-    <URI>http://dbpedia.org/resource/Sculpture</URI>
-  </texte>
-  <texte id="9" url="url9">
-    <URI>http://dbpedia.org/resource/Nazi_Germany</URI>
-    <URI>http://dbpedia.org/resource/East_Berlin</URI>
-    <URI>http://dbpedia.org/resource/Weimar_Republic</URI>
-    <URI>http://dbpedia.org/resource/German_Empire</URI>
-    <URI>http://dbpedia.org/resource/Kingdom_of_Prussia</URI>
-  </texte>
-  <texte id="7" url="url7">
-    <URI>http://dbpedia.org/resource/Nazi_Germany</URI>
-    <URI>http://dbpedia.org/resource/East_Berlin</URI>
-    <URI>http://dbpedia.org/resource/Weimar_Republic</URI>
-    <URI>http://dbpedia.org/resource/German_Empire</URI>
-    <URI>http://dbpedia.org/resource/Kingdom_of_Prussia</URI>
-  </texte>
-  <texte id="3" url="url3">
-    <URI>http://dbpedia.org/resource/Nazi_Germany</URI>
-    <URI>http://dbpedia.org/resource/East_Berlin</URI>
-    <URI>http://dbpedia.org/resource/Weimar_Republic</URI>
-    <URI>http://dbpedia.org/resource/German_Empire</URI>
-    <URI>http://dbpedia.org/resource/Kingdom_of_Prussia</URI>
-  </texte>
-  <texte id="5" url="url5">
     <URI>http://dbpedia.org/resource/Nazi_Germany</URI>
     <URI>http://dbpedia.org/resource/East_Berlin</URI>
     <URI>http://dbpedia.org/resource/Weimar_Republic</URI>
