@@ -1,0 +1,68 @@
+<list_rdf>
+ <rdf url="url0">
+<triplet>
+   <s><uri>http://dbpedia.org/resource/Michelle_Obama</uri></s>
+   <p><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></p>
+   <o><uri>http://dbpedia.org/class/yago/CausalAgent100007347</uri></o>
+  </triplet>
+   <triplet>
+    <s><uri>http://dbpedia.org/resource/Michelle_Obama</uri></s>
+    <p><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></p>
+    <o><uri>http://www.w3.org/2002/07/owl#Thing</uri></o>
+   </triplet>
+   <triplet>
+    <s><uri>http://dbpedia.org/resource/Michelle_Obama</uri></s>
+    <p><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></p>
+    <o><uri>http://xmlns.com/foaf/0.1/Person</uri></o>
+   </triplet>
+   <triplet>
+    <s><uri>http://dbpedia.org/resource/Michelle_Obama</uri></s>
+    <p><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></p>
+    <o><uri>http://dbpedia.org/ontology/Person</uri></o>
+   </triplet>
+  </rdf>
+  <rdf url="url1">
+  <triplet>
+   <s><uri>http://dbpedia.org/resource/Michelle_Obama</uri></s>
+   <p><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></p>
+   <o><uri>http://dbpedia.org/class/yago/CausalAgent100007347</uri></o>
+  </triplet>
+   <triplet>
+    <s><uri>http://dbpedia.org/resource/Michelle_Obama</uri></s>
+    <p><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></p>
+    <o><uri>http://www.w3.org/2002/07/owl#Thing</uri></o>
+   </triplet>
+   <triplet>
+    <s><uri>http://dbpedia.org/resource/Michelle_Obama</uri></s>
+    <p><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></p>
+    <o><uri>http://xmlns.com/foaf/0.1/Person</uri></o>
+   </triplet>
+   <triplet>
+    <s><uri>http://dbpedia.org/resource/Michelle_Obama</uri></s>
+    <p><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></p>
+    <o><uri>http://dbpedia.org/ontology/Person</uri></o>
+   </triplet>
+  </rdf>
+  <rdf url="url2">
+  <triplet>
+   <s><uri>http://dbpedia.org/resource/Michelle_Obama</uri></s>
+   <p><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></p>
+   <o><uri>http://dbpedia.org/class/yago/CausalAgent100007347</uri></o>
+  </triplet>
+  <triplet>
+   <s><uri>http://dbpedia.org/resource/Michelle_Obama</uri></s>
+   <p><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></p>
+   <o><uri>http://dbpedia.org/class/yago/FirstLady110092880</uri></o>
+  </triplet>
+  <triplet>
+   <s><uri>http://dbpedia.org/resource/Michelle_Obama</uri></s>
+   <p><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></p>
+   <o><uri>http://dbpedia.org/class/yago/Intellectual109621545</uri></o>
+  </triplet>
+   <triplet>
+    <s><uri>http://dbpedia.org/resource/Michelle_Obama</uri></s>
+    <p><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></p>
+    <o><uri>http://dbpedia.org/ontology/Person</uri></o>
+   </triplet>
+  </rdf>
+</list_rdf>

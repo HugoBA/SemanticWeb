@@ -15,4 +15,18 @@
     <p><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></p>
     <o><literal xml:lang="it">Studente</literal></o>   </triplet>
   </rdf>
+   <rdf>
+   <triplet>
+    <s><uri>http://dbpedia.org/resource/Michelle_Obama</uri></s>
+    <p><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></p>
+   </triplet>
+   <triplet>
+    <s><uri>http://dbpedia.org/resource/Michelle_Obama</uri></s>
+    <o><uri>http://xmlns.com/foaf/0.1/Person</uri></o>
+   </triplet>
+   <triplet>
+    <s><uri>http://dbpedia.org/resource/Michelle_Obama</uri></s>
+    <p><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></p>
+    <o><literal xml:lang="it">Studente</literal></o>   </triplet>
+  </rdf>
 </list_rdf>

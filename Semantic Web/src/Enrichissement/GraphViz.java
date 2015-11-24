@@ -36,8 +36,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
+
+import org.apache.commons.io.IOUtils;
 
 /**
  * <dl>
@@ -83,7 +86,7 @@ public class GraphViz
 	/**
 	 * Detects the client's operating system.
 	 */
-	private final static String osName = System.getProperty("os.name").replaceAll("\\s","");
+	private final static String osName = "Windows"; //System.getProperty("os.name").replaceAll("\\s","");
 
 	/**
 	 * Load the config.properties file.
@@ -245,10 +248,17 @@ public class GraphViz
 	public int writeGraphToFile(byte[] img, File to)
 	{
 		try {
-			FileOutputStream fos = new FileOutputStream(to);
-			fos.write(img);
-			fos.close();
-		} catch (java.io.IOException ioe) { return -1; }
+			FileOutputStream stream = new FileOutputStream(to);
+			IOUtils.write(img, stream);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return -1;
+		}
+//		try {
+//			FileOutputStream fos = new FileOutputStream(to);
+//			fos.write(img);
+//			fos.close();
+//		} catch (java.io.IOException ioe) { return -1; }
 		return 1;
 	}
 
@@ -316,12 +326,14 @@ public class GraphViz
 	{
 		File temp;
 		try {
-			temp = File.createTempFile("graph_", ".dot.tmp", new File(GraphViz.TEMP_DIR));
+			File directory = new File(GraphViz.TEMP_DIR);
+			temp = File.createTempFile("graph_", ".dot.tmp", directory);
 			FileWriter fout = new FileWriter(temp);
 			fout.write(str);
 			fout.close();
 		}
 		catch (Exception e) {
+			e.printStackTrace();
 			System.err.println("Error: I/O error while writing the dot source to temp file!");
 			return null;
 		}

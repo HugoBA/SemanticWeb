@@ -83,7 +83,7 @@ public class Jaccard {
             {
                //On crée un nouveau document JDOM avec en argument le fichier XML
                //Le parsing est terminé ;)
-               document = sxb.build(new File("rdf1.xml"));
+               document = sxb.build(new File("rdf.xml"));
                System.out.println("Fichier ouvert");
             }
             catch(Exception e){e.printStackTrace();}
