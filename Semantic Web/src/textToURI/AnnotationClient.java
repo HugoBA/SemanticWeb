@@ -40,7 +40,7 @@ public abstract class AnnotationClient {
     public Logger LOG = Logger.getLogger(this.getClass());
     
     // Create an instance of HttpClient.
-    private static HttpClient client = new HttpClient();
+    private static HttpClient client = new HttpClient(new MultiThreadedHttpConnectionManager());
 
 
     public String request(HttpMethod method) throws AnnotationException {

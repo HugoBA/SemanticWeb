@@ -27,40 +27,42 @@ public class Main {
 		InteractionXML interact = new InteractionXML();
 		DBpediaSpotlightClient.setConfidence(Double.parseDouble(args[0]));
 		DBpediaSpotlightClient.setSupport(Integer.parseInt(args[1]));
-		
-		DBpediaSpotlightClient dBpediaSpotlightClient = new DBpediaSpotlightClient();	
+	
 				
 		Map<Cle, String> entree;
 		Map<Cle, Set<String>> sortie = new HashMap<Cle, Set<String>>();
+		
+		ThreadURL.setSortie(sortie);
+		
+		List<ThreadURL> listThread = new ArrayList<ThreadURL>();
+		
 		try {
 			entree = interact.entreeFichier(NOMFICHIERENTREE);
 			for (Cle cle : entree.keySet()){
 				String texte = entree.get(cle);
 				Text description = new Text(texte);
 				
-				List<DBpediaResource> list = dBpediaSpotlightClient.extract(description);
-				List<String> uriList = new ArrayList<String>();
-				for(DBpediaResource rsrc: list) 
-				{
-					uriList.add(rsrc.getFullUri());
-				}
-				
-				Set<String> uniquesURI = new HashSet<String>(uriList);
-				
-				sortie.put(cle, uniquesURI);
+				DBpediaSpotlightClient dBpediaSpotlightClient = new DBpediaSpotlightClient();
+				ThreadURL threadURL = new ThreadURL(description, dBpediaSpotlightClient, cle);
+				listThread.add(threadURL);
+				threadURL.start();
 			}
 			
+			for (int i = 0; i < listThread.size(); i++){
+				listThread.get(i).join();
+			}
 			
-			
+			sortie = ThreadURL.getSortie();
 			interact.sortieFichier(NOMFICHIERSORTIE, sortie);
 			
 		} catch (SAXException e1) {
 			e1.printStackTrace();
 		} catch (IOException e1) {
 			e1.printStackTrace();
-		} catch (AnnotationException e) {
-			e.printStackTrace();
 		} catch (TransformerConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
