@@ -1,5 +1,5 @@
 <list_rdf>
- <rdf>
+ <rdf url="url0">
 <triplet>
    <s><uri>http://dbpedia.org/resource/Michelle_Obama</uri></s>
    <p><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></p>
@@ -21,7 +21,7 @@
     <o><uri>http://dbpedia.org/ontology/Person</uri></o>
    </triplet>
   </rdf>
-  <rdf>
+  <rdf url="url1">
   <triplet>
    <s><uri>http://dbpedia.org/resource/Michelle_Obama</uri></s>
    <p><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></p>
@@ -43,7 +43,7 @@
     <o><uri>http://dbpedia.org/ontology/Person</uri></o>
    </triplet>
   </rdf>
-  <rdf>
+  <rdf url="url2">
   <triplet>
    <s><uri>http://dbpedia.org/resource/Michelle_Obama</uri></s>
    <p><uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri></p>

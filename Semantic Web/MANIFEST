@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Main-Class: Main
-Class-Path: ./lib/dbpedia-spotlight-0.7.jar ./lib/jdom-2.0.6.jar
-
