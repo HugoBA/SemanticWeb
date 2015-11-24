@@ -10,11 +10,12 @@ package Enrichissement;
  * @author zlahjouji
  */
 import java.io.*;
-
-    import org.jdom2.input.SAXBuilder.*;
+import java.util.ArrayList;
+import Enrichissement.GraphViz;
     import org.jdom2.*;
     import java.util.List;
     import java.util.Iterator;
+    import org.jdom2.input.SAXBuilder;
 
 
 public class Jaccard {
@@ -28,7 +29,8 @@ public class Jaccard {
     static double[][] mat;
     static double[][] carUnion;
     static int nbRDF;
-    
+    static List<String>urls=new ArrayList<String>();
+    static GraphViz gv;
     
     public static void main(String[] args) {
         // TODO code application logic here
@@ -45,6 +47,8 @@ public class Jaccard {
         for (Iterator iRDF = listRDF.iterator(); iRDF.hasNext(); i++)     
         {
             Element curRDF1=(Element)iRDF.next();
+            urls.add(curRDF1.getAttributeValue("url"));
+            
             j=0;
 
             for (Iterator jRDF = listRDF.iterator(); jRDF.hasNext(); j++)
@@ -57,12 +61,18 @@ public class Jaccard {
                 comparerRDF(curRDF1, i, curRDF2, j);
             }
         }
-
-            
+      
     }   
     diviserMatrices();     
     afficherMatrice(mat, nbRDF);
- }
+    
+    
+    
+    genererDotSource();
+    
+    
+
+}
     		
     
     
@@ -73,7 +83,7 @@ public class Jaccard {
             {
                //On crée un nouveau document JDOM avec en argument le fichier XML
                //Le parsing est terminé ;)
-               document = sxb.build(new File("rdf.xml"));
+               document = sxb.build(new File("rdf1.xml"));
                System.out.println("Fichier ouvert");
             }
             catch(Exception e){e.printStackTrace();}
@@ -204,7 +214,28 @@ public class Jaccard {
                
         }
         return true;
-
-       
     }
+        private static void genererDotSource()
+        {
+            gv = new GraphViz();
+            gv.addln(gv.start_graph());
+            for(int i=0; i<nbRDF;i++)
+            {
+                for(int j=i; j<nbRDF; j++)
+                {
+                    if(mat[i][j]>0 && mat[i][j]<1)
+                    gv.addln(urls.get(i)+"--"+urls.get(j)+"[label=\""+mat[i][j]+"\",weight=\""+mat[i][j]+"\"];");
+                }
+
+            }
+            gv.addln(gv.end_graph());
+            System.out.println(gv.getDotSource());
+            gv.increaseDpi();   // 106 dpi
+            String type = "gif";
+            String repesentationType= "dot";
+            File out = new File("out." + type);
+            gv.writeGraphToFile( gv.getGraph(gv.getDotSource(), type, repesentationType), out );
+        }
+       
+    
 }
