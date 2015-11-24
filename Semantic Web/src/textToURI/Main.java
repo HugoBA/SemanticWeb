@@ -17,32 +17,21 @@ import org.xml.sax.SAXException;
 
 public class Main {
 
-	static String nomFichierEntree;
-	static String nomFichierSortie;
+	static final String NOMFICHIERENTREE = "Texts.xml";
+	static final String NOMFICHIERSORTIE = "URIs.xml";
 	
 	public static void main(String [] args)
-	{
-		DBpediaSpotlightClient dBpediaSpotlightClient = new DBpediaSpotlightClient();		
+	{	
 		InteractionXML interact = new InteractionXML();
-		switch (args.length){
-			case 0:
-				nomFichierEntree = "Texts.xml";
-				nomFichierSortie = "URIs.xml";
-				break;
-			case 1:
-				nomFichierEntree = args[0];
-				nomFichierSortie = "URIs.xml";
-				break;
-			case 2:
-				nomFichierEntree = args[0];
-				nomFichierSortie = args[1];
-				break;
-		}
+		DBpediaSpotlightClient.setConfidence(Double.parseDouble(args[0]));
+		DBpediaSpotlightClient.setSupport(Integer.parseInt(args[1]));
+		
+		DBpediaSpotlightClient dBpediaSpotlightClient = new DBpediaSpotlightClient();	
 				
 		Map<Cle, String> entree;
 		Map<Cle, List<String>> sortie = new HashMap<Cle, List<String>>();
 		try {
-			entree = interact.entreeFichier(nomFichierEntree);
+			entree = interact.entreeFichier(NOMFICHIERENTREE);
 			for (Cle cle : entree.keySet()){
 				String texte = entree.get(cle);
 				Text description = new Text(texte);
@@ -60,7 +49,7 @@ public class Main {
 				System.out.println(uriList.toString());
 				sortie.put(cle, uriList);
 			}
-			interact.sortieFichier(nomFichierSortie, sortie);
+			interact.sortieFichier(NOMFICHIERSORTIE, sortie);
 			
 		} catch (SAXException e1) {
 			e1.printStackTrace();

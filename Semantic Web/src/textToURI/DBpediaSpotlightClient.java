@@ -41,9 +41,24 @@ public class DBpediaSpotlightClient extends AnnotationClient {
 
 	//private final static String API_URL = "http://jodaiber.dyndns.org:2222/";
     private final static String API_URL = "http://spotlight.dbpedia.org/";
-	private static final double CONFIDENCE = 0.3;
-	private static final int SUPPORT = 0;
+	private static double confidence = 0.3;
+	private static int support = 0;
 
+	
+	public static double getConfidence() {
+		return confidence;
+	}
+	public static int getSupport() {
+		return support;
+	}
+	
+	public static void setConfidence(double confidence) {
+		DBpediaSpotlightClient.confidence = confidence;
+	}
+	public static void setSupport(int support) {
+		DBpediaSpotlightClient.support = support;
+	}
+	
 	@Override
 	public List<DBpediaResource> extract(Text text) throws AnnotationException {
 
@@ -51,8 +66,8 @@ public class DBpediaSpotlightClient extends AnnotationClient {
 		String spotlightResponse;
 		try {
 			GetMethod getMethod = new GetMethod(API_URL + "rest/annotate/?" +
-					"confidence=" + CONFIDENCE
-					+ "&support=" + SUPPORT
+					"confidence=" + confidence
+					+ "&support=" + support
 					+ "&text=" + URLEncoder.encode(text.text(), "utf-8"));
 			getMethod.addRequestHeader(new Header("Accept", "application/json"));
 
