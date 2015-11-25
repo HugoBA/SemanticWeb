@@ -64,7 +64,7 @@ public class Jaccard {
 		afficherMatrice(mat, nbRDF);
 
 		genererDotSource();
-		EcritureXML.ecrireXmlCluster(nbRDF, urls, mat);
+		EcritureGrapheDansTxt.ecrireTxtFile(nbRDF, urls, mat);
 
 	}
 
