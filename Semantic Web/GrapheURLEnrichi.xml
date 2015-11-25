@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<GrapheURL>
+  <Lien cofficient="0,34">
+    <URL value="url0"/>
+    <URL value="url1"/>
+  </Lien>
+  <Lien cofficient="0,25">
+    <URL value="url1"/>
+    <URL value="url2"/>
+  </Lien>
+</GrapheURL>
