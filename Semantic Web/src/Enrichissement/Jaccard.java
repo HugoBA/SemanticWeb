@@ -55,7 +55,7 @@ public class Jaccard {
 				Element curRDF2 = (Element) jRDF.next();
 
 				if (i != j) {
-					comparerRDF(curRDF1, i, curRDF2, j);
+					comparerRDF(curRDF1, i, curRDF2, j, args[0]);
 				}
 			}
 
@@ -63,7 +63,7 @@ public class Jaccard {
 		diviserMatrices();
 		afficherMatrice(mat, nbRDF);
 
-		genererDotSource();
+		genererDotSource(Float.parseFloat(args[1]));
 		EcritureGrapheDansTxt.ecrireTxtFile(nbRDF, urls, mat);
 
 	}
@@ -112,7 +112,7 @@ public class Jaccard {
 		}
 	}
 
-	private static void comparerRDF(Element rdf1, int i, Element rdf2, int j) {
+	private static void comparerRDF(Element rdf1, int i, Element rdf2, int j, String param) {
 		List listTriplet1 = rdf1.getChildren("triplet");
 		List listTriplet2 = rdf2.getChildren("triplet");
 
@@ -122,19 +122,50 @@ public class Jaccard {
 
 			Element curTriplet1 = (Element) iTriplet.next();
 
-			for (Iterator jTriplet = listTriplet2.iterator(); jTriplet.hasNext();) {
-				Element curTriplet2 = (Element) jTriplet.next();
-
-				if (comparerTriplet(curTriplet1, curTriplet2)) {
-					mat[i][j] += 1.0;
-					carUnion[i][j] -= 1;
+			if(param.equals("0"))
+			{
+				for (Iterator jTriplet = listTriplet2.iterator(); jTriplet.hasNext();) {
+					Element curTriplet2 = (Element) jTriplet.next();
+					if (comparerTripletEntier(curTriplet1, curTriplet2)) {
+						mat[i][j] += 1.0;
+						carUnion[i][j] -= 1;
+					}
+				}
+			}
+			else if(param.equals("1"))
+			{
+				for (Iterator jTriplet = listTriplet2.iterator(); jTriplet.hasNext();) {
+					Element curTriplet2 = (Element) jTriplet.next();
+					if (comparerTripletSujet(curTriplet1, curTriplet2)) {
+						mat[i][j] += 1.0;
+						carUnion[i][j] -= 1;
+					}
+				}
+			}
+			else if(param.equals("2"))
+			{
+				for (Iterator jTriplet = listTriplet2.iterator(); jTriplet.hasNext();) {
+					Element curTriplet2 = (Element) jTriplet.next();
+					if (comparerTripletObjet(curTriplet1, curTriplet2)) {
+						mat[i][j] += 1.0;
+						carUnion[i][j] -= 1;
+					}
 				}
 
 			}
 		}
 	}
+	private static boolean comparerTripletSujet(Element triplet1, Element triplet2) {
+		String s1 = triplet1.getChild("s").getChildText("uri");
+		String s2 = triplet2.getChild("s").getChildText("uri");
+		if (!s1.equals(s2)) {
+			return false;
+		} 
+		return true;
+	}
 
-	private static boolean comparerTriplet(Element triplet1, Element triplet2) {
+	
+	private static boolean comparerTripletEntier(Element triplet1, Element triplet2) {
 		String s1 = triplet1.getChild("s").getChildText("uri");
 		String s2 = triplet2.getChild("s").getChildText("uri");
 		String p1 = triplet1.getChild("p").getChildText("uri");
@@ -202,12 +233,12 @@ public class Jaccard {
 		return true;
 	}
 
-	private static void genererDotSource() {
+	private static void genererDotSource(float seuil) {
 		gv = new GraphViz();
 		gv.addln(gv.start_graph());
 		for (int i = 0; i < nbRDF; i++) {
 			for (int j = i; j < nbRDF; j++) {
-				if (mat[i][j] > 0 && mat[i][j] < 1)
+				if (mat[i][j] > seuil && mat[i][j] < 1)
 					gv.addln(urls.get(i) + "--" + urls.get(j) + "[label=\""
 							+ (new DecimalFormat("#.##").format(mat[i][j])) + "\",weight=\""
 							+ (new DecimalFormat("#.##").format(mat[i][j])) + "\"];");
