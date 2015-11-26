@@ -45,14 +45,17 @@ public class Jaccard {
 
 		int i = 0;
 		int j;
-		for (Element iRDF:listRDF) {
-			i++;
-			urls.add(iRDF.getAttributeValue("url"));
+		for (Iterator iRDF = listRDF.iterator(); iRDF.hasNext(); i++) {
+			Element curRDF1 = (Element) iRDF.next();
+			urls.add(curRDF1.getAttributeValue("url"));
+
 			j = 0;
-			for (Element jRDF:listRDF) {
-				j++;
+
+			for (Iterator jRDF = listRDF.iterator(); jRDF.hasNext(); j++) {
+				Element curRDF2 = (Element) jRDF.next();
+
 				if (i != j) {
-					comparerRDF(iRDF, i, jRDF, j, args[0]);
+					comparerRDF(curRDF1, i, curRDF2, j, args[0]);
 				}
 			}
 
@@ -129,9 +132,10 @@ public class Jaccard {
 				}
 				if(v==false)
 				{
-				Iterator<Element> jIt= listTriplet2.iterator();
-					while (jIt.hasNext()) {
-						Element jTriplet =(Element)jIt.next();
+					Iterator<Element> jIt= listTriplet2.iterator();
+					while(jIt.hasNext())
+					{	
+						Element jTriplet=(Element)jIt.next();
 						if (comparerTripletEntier(iTriplet, jTriplet)) {
 							mat[i][j] += 1.0;
 							carUnion[i][j] -= 1;
@@ -142,29 +146,69 @@ public class Jaccard {
 				}
 			}
 		}
-		/**else if(param.equals("1"))
+		else if(param.equals("1"))
 		{
-			for (Iterator jTriplet = listTriplet2.iterator(); jTriplet.hasNext();) {
-				Element curTriplet2 = (Element) jTriplet.next();
-				if (comparerTripletSujet(iTriplet, jTriplet)) {
-					mat[i][j] += 1.0;
-					carUnion[i][j] -= 1;
+			for (Element iTriplet : listTriplet1) {
+				List<Element> visite=new ArrayList<Element>();
+				boolean v=false;
+				Iterator<Element> it= visite.iterator();
+				while(it.hasNext() && v==false)
+				{
+					Element tripletVisite =(Element)it.next();
+					if(comparerTripletSujet(iTriplet, tripletVisite ))
+					{
+						v=true;
+					}
+				}
+				if(v==false)
+				{
+					Iterator<Element> jIt= listTriplet2.iterator();
+					while(jIt.hasNext())
+					{	
+						Element jTriplet=(Element)jIt.next();
+						if (comparerTripletSujet(iTriplet, jTriplet)) {
+							mat[i][j] += 1.0;
+							carUnion[i][j] -= 1;
+							break;
+						}
+					}
+					visite.add(iTriplet);
 				}
 			}
 		}
+		
 		else if(param.equals("2"))
 		{
-			for (Iterator jTriplet = listTriplet2.iterator(); jTriplet.hasNext();) {
-				Element curTriplet2 = (Element) jTriplet.next();
-				if (comparerTripletObjet(iTriplet, jTriplet)) {
-					mat[i][j] += 1.0;
-					carUnion[i][j] -= 1;
+			for (Element iTriplet : listTriplet1) {
+				List<Element> visite=new ArrayList<Element>();
+				boolean v=false;
+				Iterator<Element> it= visite.iterator();
+				while(it.hasNext() && v==false)
+				{
+					Element tripletVisite =(Element)it.next();
+					if(comparerTripletObjet(iTriplet, tripletVisite ))
+					{
+						v=true;
+					}
+				}
+				if(v==false)
+				{
+					Iterator<Element> jIt= listTriplet2.iterator();
+					while(jIt.hasNext())
+					{	
+						Element jTriplet=(Element)jIt.next();
+						if (comparerTripletObjet(iTriplet, jTriplet)) {
+							mat[i][j] += 1.0;
+							carUnion[i][j] -= 1;
+							break;
+						}
+					}
+					visite.add(iTriplet);
 				}
 			}
-
 		}
-		}**/
 	}
+	
 	private static boolean comparerTripletSujet(Element triplet1, Element triplet2) {
 		String s1 = triplet1.getChild("s").getChildText("uri");
 		String s2 = triplet2.getChild("s").getChildText("uri");
@@ -202,6 +246,7 @@ public class Jaccard {
 	}
 
 	private static boolean comparerObjet(Element triplet1, Element triplet2) {
+		System.out.print("je suis passee ici");
 		Element uri1 = triplet1.getChild("uri");
 		Element uri2 = triplet2.getChild("uri");
 		Element literal1 = triplet1.getChild("literal");
