@@ -86,7 +86,7 @@ public class GraphViz
 	/**
 	 * Detects the client's operating system.
 	 */
-	private final static String osName = "Windows"; //System.getProperty("os.name").replaceAll("\\s","");
+	private final static String osName = "MacOSX"; //System.getProperty("os.name").replaceAll("\\s","");
 
 	/**
 	 * Load the config.properties file.
