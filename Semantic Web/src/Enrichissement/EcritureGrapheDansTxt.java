@@ -16,7 +16,7 @@ public class EcritureGrapheDansTxt {
 		for (int i = 0; i < nbRDF; i++) {
 			for (int j = i; j < nbRDF; j++) {
 				if (coefficients[i][j] > 0 && coefficients[i][j] < 1){
-					content += urls.get(i) + " " + urls.get(j) + " " + (new DecimalFormat("#.##").format(coefficients[i][j])) + "\r\n";
+					content += urls.get(i) + " " + urls.get(j) + " " + (new DecimalFormat("#.##").format(coefficients[i][j]).replace(',', '.')) + "\r\n";
 				}
 			}
 		}
