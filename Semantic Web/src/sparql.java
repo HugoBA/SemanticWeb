@@ -6,6 +6,12 @@
  */
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+
+import org.dom4j.DocumentException;
+import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,6 +22,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -39,13 +46,14 @@ public class sparql {
 	/**
 	 * @param args
 	 *            the command line arguments
-	 * @throws UnsupportedEncodingException
-	 * @throws MalformedURLException
-	 * @throws FileNotFoundException
 	 * @throws InterruptedException 
+	 * @throws ParserConfigurationException 
+	 * @throws IOException 
+	 * @throws SAXException 
+	 * @throws DocumentException 
 	 */
 	public static void main(String[] args)
-			throws UnsupportedEncodingException, MalformedURLException, FileNotFoundException, InterruptedException {
+			throws InterruptedException, ParserConfigurationException, SAXException, IOException, DocumentException {
 		ArrayList<TexteURI> extractedURIs = extractURI("liste_uri.xml");
 		Iterator<TexteURI> it = extractedURIs.iterator();
 		ArrayList<String> results = new ArrayList<>();
@@ -84,13 +92,21 @@ public class sparql {
 		for(String s: results){
 			result += s;
 		}
-
-		PrintWriter out = new PrintWriter("liste_rdf.xml");
-	
-     	result = "<list_rdf>" + result;
+		result += "<?xml version=\"1.0\" encoding=\"iso-8859-1\" standalone=\"yes\"?>";
+		result = "<list_rdf>" + result;
 		result = result + "</list_rdf>";
-		out.println(result);
-		out.close();
+		PrintWriter out = new PrintWriter("liste_rdf.xml");
+		SAXReader reader = new SAXReader(
+	            org.ccil.cowan.tagsoup.Parser.class.getName());
+	    org.dom4j.Document doc = (org.dom4j.Document) reader.read(new ByteArrayInputStream(result.getBytes(StandardCharsets.UTF_8)));
+	    XMLWriter writer = new XMLWriter(out);
+	    writer.write(doc);
+		 
+		    
+		
+	
+     	
+		
 
 	}
 

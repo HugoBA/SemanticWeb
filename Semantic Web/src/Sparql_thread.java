@@ -99,8 +99,11 @@ public class Sparql_thread implements Runnable {
 	public void run() {
 		String result = "";
 		String query = "";
+		TexteURI texteURI = null;
 		while (it.hasNext()) {
-			TexteURI texteURI = it.next();
+			synchronized(it){
+				texteURI = it.next();
+			}
 			try {
 				query = this.makeQuery(texteURI);
 				result = this.query(query, texteURI.url);
