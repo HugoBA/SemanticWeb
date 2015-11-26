@@ -106,6 +106,7 @@ public class sparql {
 	    //writer.write(doc);
 	    //writer.flush();
 	    out.write(result);
+	    out.flush();
 
 	}
 

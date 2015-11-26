@@ -18083,4 +18083,209 @@
 <o><uri>http://dbpedia.org/resource/Collective_security</uri></o>
 </triplet>
 <triplet>
-<s><uri>ht
+<s><uri>http://dbpedia.org/resource/Russian_Empire</uri></s>
+<p><uri>http://dbpedia.org/property/status</uri></p>
+<o><literal xml:lang="en">Empire</literal></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Russian_Empire</uri></s>
+<p><uri>http://dbpedia.org/property/symbol</uri></p>
+<o><literal xml:lang="en">Coat of arms of Russia</literal></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Austria-Hungary</uri></s>
+<p><uri>http://dbpedia.org/property/symbolType</uri></p>
+<o><literal xml:lang="en">Imperial &amp; Royal Coat of arms</literal></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Russian_Empire</uri></s>
+<p><uri>http://dbpedia.org/property/symbolType</uri></p>
+<o><literal xml:lang="en">Coat of arms</literal></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Austria-Hungary</uri></s>
+<p><uri>http://dbpedia.org/property/title</uri></p>
+<o><literal xml:lang="en">Austria-Hungary</literal></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Austria-Hungary</uri></s>
+<p><uri>http://dbpedia.org/property/titleDeputy</uri></p>
+<o><uri>http://dbpedia.org/resource/List_of_Prime_Ministers_of_Hungary</uri></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Austria-Hungary</uri></s>
+<p><uri>http://dbpedia.org/property/titleLeader</uri></p>
+<o><uri>http://dbpedia.org/resource/Emperor_of_Austria</uri></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Austria-Hungary</uri></s>
+<p><uri>http://dbpedia.org/property/titleLeader</uri></p>
+<o><uri>http://dbpedia.org/resource/King_of_Hungary</uri></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Russian_Empire</uri></s>
+<p><uri>http://dbpedia.org/property/titleLeader</uri></p>
+<o><uri>http://dbpedia.org/resource/Emperor_of_All_Russia</uri></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Austria-Hungary</uri></s>
+<p><uri>http://dbpedia.org/property/titleRepresentative</uri></p>
+<o><uri>http://dbpedia.org/resource/List_of_Ministers-President_of_Austria</uri></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Austria-Hungary</uri></s>
+<p><uri>http://dbpedia.org/property/url</uri></p>
+<o><uri>http://www.geocities.com/CapitolHill/Rotunda/2209/Austria_Hungary.html</uri></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Russian_Empire</uri></s>
+<p><uri>http://dbpedia.org/property/width</uri></p>
+<o><literal datatype="http://www.w3.org/2001/XMLSchema#integer">220</literal></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/World_war</uri></s>
+<p><uri>http://dbpedia.org/property/width</uri></p>
+<o><literal datatype="http://www.w3.org/2001/XMLSchema#integer">300</literal></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Treaty_of_Versailles</uri></s>
+<p><uri>http://dbpedia.org/property/wikisource</uri></p>
+<o><literal xml:lang="en">Treaty of Versailles</literal></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Austria-Hungary</uri></s>
+<p><uri>http://dbpedia.org/property/yearDeputy</uri></p>
+<o><literal datatype="http://www.w3.org/2001/XMLSchema#integer">1867</literal></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Austria-Hungary</uri></s>
+<p><uri>http://dbpedia.org/property/yearDeputy</uri></p>
+<o><literal datatype="http://www.w3.org/2001/XMLSchema#integer">1918</literal></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Russian_Empire</uri></s>
+<p><uri>http://dbpedia.org/property/yearDeputy</uri></p>
+<o><literal datatype="http://www.w3.org/2001/XMLSchema#integer">1917</literal></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Austria-Hungary</uri></s>
+<p><uri>http://dbpedia.org/property/yearEnd</uri></p>
+<o><literal datatype="http://www.w3.org/2001/XMLSchema#integer">1918</literal></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Central_Powers</uri></s>
+<p><uri>http://dbpedia.org/property/yearEnd</uri></p>
+<o><literal datatype="http://www.w3.org/2001/XMLSchema#integer">1918</literal></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Russian_Empire</uri></s>
+<p><uri>http://dbpedia.org/property/yearEnd</uri></p>
+<o><literal datatype="http://www.w3.org/2001/XMLSchema#integer">1917</literal></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Austria-Hungary</uri></s>
+<p><uri>http://dbpedia.org/property/yearLeader</uri></p>
+<o><literal datatype="http://www.w3.org/2001/XMLSchema#integer">1867</literal></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Austria-Hungary</uri></s>
+<p><uri>http://dbpedia.org/property/yearLeader</uri></p>
+<o><literal datatype="http://www.w3.org/2001/XMLSchema#integer">1916</literal></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Austria-Hungary</uri></s>
+<p><uri>http://dbpedia.org/property/yearRepresentative</uri></p>
+<o><literal datatype="http://www.w3.org/2001/XMLSchema#integer">1867</literal></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Austria-Hungary</uri></s>
+<p><uri>http://dbpedia.org/property/yearRepresentative</uri></p>
+<o><literal datatype="http://www.w3.org/2001/XMLSchema#integer">1918</literal></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Austria-Hungary</uri></s>
+<p><uri>http://dbpedia.org/property/yearStart</uri></p>
+<o><literal datatype="http://www.w3.org/2001/XMLSchema#integer">1867</literal></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Central_Powers</uri></s>
+<p><uri>http://dbpedia.org/property/yearStart</uri></p>
+<o><literal datatype="http://www.w3.org/2001/XMLSchema#integer">1914</literal></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Russian_Empire</uri></s>
+<p><uri>http://dbpedia.org/property/yearStart</uri></p>
+<o><literal datatype="http://www.w3.org/2001/XMLSchema#integer">1721</literal></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Austria-Hungary</uri></s>
+<p><uri>http://dbpedia.org/property/hasPhotoCollection</uri></p>
+<o><uri>http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/photos/Austria-Hungary</uri></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/British_Empire</uri></s>
+<p><uri>http://dbpedia.org/property/hasPhotoCollection</uri></p>
+<o><uri>http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/photos/British_Empire</uri></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Central_Powers</uri></s>
+<p><uri>http://dbpedia.org/property/hasPhotoCollection</uri></p>
+<o><uri>http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/photos/Central_Powers</uri></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/July_28</uri></s>
+<p><uri>http://dbpedia.org/property/hasPhotoCollection</uri></p>
+<o><uri>http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/photos/July_28</uri></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/June_28</uri></s>
+<p><uri>http://dbpedia.org/property/hasPhotoCollection</uri></p>
+<o><uri>http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/photos/June_28</uri></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/November_11</uri></s>
+<p><uri>http://dbpedia.org/property/hasPhotoCollection</uri></p>
+<o><uri>http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/photos/November_11</uri></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Treaty_of_Versailles</uri></s>
+<p><uri>http://dbpedia.org/property/hasPhotoCollection</uri></p>
+<o><uri>http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/photos/Treaty_of_Versailles</uri></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Russian_Empire</uri></s>
+<p><uri>http://dbpedia.org/property/hasPhotoCollection</uri></p>
+<o><uri>http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/photos/Russian_Empire</uri></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/World_War_I</uri></s>
+<p><uri>http://dbpedia.org/property/hasPhotoCollection</uri></p>
+<o><uri>http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/photos/World_War_I</uri></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Triple_Entente</uri></s>
+<p><uri>http://dbpedia.org/property/hasPhotoCollection</uri></p>
+<o><uri>http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/photos/Triple_Entente</uri></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/A-side_and_B-side</uri></s>
+<p><uri>http://dbpedia.org/property/hasPhotoCollection</uri></p>
+<o><uri>http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/photos/A-side_and_B-side</uri></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/Allies_of_World_War_I</uri></s>
+<p><uri>http://dbpedia.org/property/hasPhotoCollection</uri></p>
+<o><uri>http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/photos/Allies_of_World_War_I</uri></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/World_war</uri></s>
+<p><uri>http://dbpedia.org/property/hasPhotoCollection</uri></p>
+<o><uri>http://wifo5-03.informatik.uni-mannheim.de/flickrwrappr/photos/World_war</uri></o>
+</triplet>
+<triplet>
+<s><uri>http://dbpedia.org/resource/World_War_I</uri></s>
+<p><uri>http://dbpedia.org/property/wordnet_type</uri></p>
+<o><uri>http://www.w3.org/2006/03/wn/wn20/instances/synset-war-noun-1</uri></o>
+</triplet>
+</rdf>
+</list_rdf>
