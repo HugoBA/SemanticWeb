@@ -16,8 +16,13 @@
 
 package textToURI;
 
+import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.dbpedia.spotlight.exceptions.AnnotationException;
 import org.dbpedia.spotlight.model.DBpediaResource;
 import org.dbpedia.spotlight.model.Text;
@@ -26,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.LinkedList;
@@ -63,15 +69,55 @@ public class DBpediaSpotlightClient extends AnnotationClient {
 	public List<DBpediaResource> extract(Text text) throws AnnotationException {
 
         LOG.info("Querying API.");
-		String spotlightResponse;
+		String spotlightResponse = null;
 		try {
-			GetMethod getMethod = new GetMethod(API_URL + "rest/annotate/?" +
+			
+			// Create an instance of HttpClient.
+		    HttpClient client = new HttpClient();
+
+		    // Create a method instance.
+		    GetMethod getMethod = new GetMethod(API_URL + "rest/annotate/?" +
 					"confidence=" + confidence
 					+ "&support=" + support
 					+ "&text=" + URLEncoder.encode(text.text(), "utf-8"));
-			getMethod.addRequestHeader(new Header("Accept", "application/json"));
 
-			spotlightResponse = request(getMethod);
+			getMethod.addRequestHeader(new Header("Accept", "application/json"));
+		    
+		    // Provide custom retry handler is necessary
+		    getMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, 
+		    		new DefaultHttpMethodRetryHandler(3, false));
+
+		    try {
+		      // Execute the method.
+		      int statusCode = client.executeMethod(getMethod);
+
+		      if (statusCode != HttpStatus.SC_OK) {
+		        System.err.println("Method failed: " + getMethod.getStatusLine());
+		      }
+
+		      // Read the response body.
+		      spotlightResponse = request(getMethod);
+
+		    } catch (HttpException e1) {
+		      System.err.println("Fatal protocol violation: " + e1.getMessage());
+		      e1.printStackTrace();
+		    } catch (IOException e) {
+		      System.err.println("Fatal transport error: " + e.getMessage());
+		      e.printStackTrace();
+		    } finally {
+		      // Release the connection.
+		    	getMethod.releaseConnection();
+		    }  
+		    
+//			GetMethod getMethod = new GetMethod(API_URL + "rest/annotate/?" +
+//					"confidence=" + confidence
+//					+ "&support=" + support
+//					+ "&text=" + URLEncoder.encode(text.text(), "utf-8"));
+//			getMethod.addRequestHeader(new Header("Accept", "application/json"));
+//
+//			spotlightResponse = request(getMethod);
+//			System.out.println(getMethod);
+		    
 		} catch (UnsupportedEncodingException e) {
 			throw new AnnotationException("Could not encode text.", e);
 		}
