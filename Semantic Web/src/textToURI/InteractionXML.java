@@ -89,7 +89,6 @@ public class InteractionXML {
 			ecritureXML(xmlSortie, nomFichier);
 			
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 	}

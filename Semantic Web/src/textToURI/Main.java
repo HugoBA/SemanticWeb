@@ -20,7 +20,7 @@ import org.xml.sax.SAXException;
 public class Main {
 
 	static final String NOMFICHIERENTREE = "Texts.xml";
-	static final String NOMFICHIERSORTIE = "URIs.xml";
+	static final String NOMFICHIERSORTIE = "liste_uri.xml";
 	
 	public static void main(String [] args)
 	{	
