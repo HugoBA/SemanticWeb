@@ -37,7 +37,7 @@ public class Jaccard {
 		// TODO code application logic here
 		ouvrirDoc();
 
-		List listRDF = racine.getChildren("rdf");
+		List<Element> listRDF = racine.getChildren("rdf");
 
 		nbRDF = listRDF.size();
 
@@ -45,17 +45,14 @@ public class Jaccard {
 
 		int i = 0;
 		int j;
-		for (Iterator iRDF = listRDF.iterator(); iRDF.hasNext(); i++) {
-			Element curRDF1 = (Element) iRDF.next();
-			urls.add(curRDF1.getAttributeValue("url"));
-
+		for (Element iRDF:listRDF) {
+			i++;
+			urls.add(iRDF.getAttributeValue("url"));
 			j = 0;
-
-			for (Iterator jRDF = listRDF.iterator(); jRDF.hasNext(); j++) {
-				Element curRDF2 = (Element) jRDF.next();
-
+			for (Element jRDF:listRDF) {
+				j++;
 				if (i != j) {
-					comparerRDF(curRDF1, i, curRDF2, j, args[0]);
+					comparerRDF(iRDF, i, jRDF, j, args[0]);
 				}
 			}
 
@@ -113,47 +110,60 @@ public class Jaccard {
 	}
 
 	private static void comparerRDF(Element rdf1, int i, Element rdf2, int j, String param) {
-		List listTriplet1 = rdf1.getChildren("triplet");
-		List listTriplet2 = rdf2.getChildren("triplet");
-
+		List<Element> listTriplet1 = rdf1.getChildren("triplet");
+		List<Element> listTriplet2 = rdf2.getChildren("triplet");
 		carUnion[i][j] = listTriplet1.size() + listTriplet2.size();
-
-		for (Iterator iTriplet = listTriplet1.iterator(); iTriplet.hasNext();) {
-
-			Element curTriplet1 = (Element) iTriplet.next();
-
-			if(param.equals("0"))
-			{
-				for (Iterator jTriplet = listTriplet2.iterator(); jTriplet.hasNext();) {
-					Element curTriplet2 = (Element) jTriplet.next();
-					if (comparerTripletEntier(curTriplet1, curTriplet2)) {
-						mat[i][j] += 1.0;
-						carUnion[i][j] -= 1;
+		if(param.equals("0"))
+		{
+			for (Element iTriplet : listTriplet1) {
+				List<Element> visite=new ArrayList<Element>();
+				boolean v=false;
+				Iterator<Element> it= visite.iterator();
+				while(it.hasNext() && v==false)
+				{
+					Element tripletVisite =(Element)it.next();
+					if(comparerTripletEntier(iTriplet, tripletVisite ))
+					{
+						v=true;
 					}
 				}
-			}
-			else if(param.equals("1"))
-			{
-				for (Iterator jTriplet = listTriplet2.iterator(); jTriplet.hasNext();) {
-					Element curTriplet2 = (Element) jTriplet.next();
-					if (comparerTripletSujet(curTriplet1, curTriplet2)) {
-						mat[i][j] += 1.0;
-						carUnion[i][j] -= 1;
+				if(v==false)
+				{
+				Iterator<Element> jIt= listTriplet2.iterator();
+					while (jIt.hasNext()) {
+						Element jTriplet =(Element)jIt.next();
+						if (comparerTripletEntier(iTriplet, jTriplet)) {
+							mat[i][j] += 1.0;
+							carUnion[i][j] -= 1;
+							break;
+						}
 					}
+					visite.add(iTriplet);
 				}
-			}
-			else if(param.equals("2"))
-			{
-				for (Iterator jTriplet = listTriplet2.iterator(); jTriplet.hasNext();) {
-					Element curTriplet2 = (Element) jTriplet.next();
-					if (comparerTripletObjet(curTriplet1, curTriplet2)) {
-						mat[i][j] += 1.0;
-						carUnion[i][j] -= 1;
-					}
-				}
-
 			}
 		}
+		/**else if(param.equals("1"))
+		{
+			for (Iterator jTriplet = listTriplet2.iterator(); jTriplet.hasNext();) {
+				Element curTriplet2 = (Element) jTriplet.next();
+				if (comparerTripletSujet(iTriplet, jTriplet)) {
+					mat[i][j] += 1.0;
+					carUnion[i][j] -= 1;
+				}
+			}
+		}
+		else if(param.equals("2"))
+		{
+			for (Iterator jTriplet = listTriplet2.iterator(); jTriplet.hasNext();) {
+				Element curTriplet2 = (Element) jTriplet.next();
+				if (comparerTripletObjet(iTriplet, jTriplet)) {
+					mat[i][j] += 1.0;
+					carUnion[i][j] -= 1;
+				}
+			}
+
+		}
+		}**/
 	}
 	private static boolean comparerTripletSujet(Element triplet1, Element triplet2) {
 		String s1 = triplet1.getChild("s").getChildText("uri");
