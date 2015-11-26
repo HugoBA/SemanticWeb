@@ -92,15 +92,17 @@ public class sparql {
 		for(String s: results){
 			result += s;
 		}
-		result += "<?xml version=\"1.0\" encoding=\"iso-8859-1\" standalone=\"yes\"?>";
+		
 		result = "<list_rdf>" + result;
 		result = result + "</list_rdf>";
+		result = "<?xml version=\"1.0\" encoding=\"iso-8859-1\" standalone=\"yes\"?>" + result;
 		PrintWriter out = new PrintWriter("liste_rdf.xml");
 		SAXReader reader = new SAXReader(
 	            org.ccil.cowan.tagsoup.Parser.class.getName());
 	    org.dom4j.Document doc = (org.dom4j.Document) reader.read(new ByteArrayInputStream(result.getBytes(StandardCharsets.UTF_8)));
 	    XMLWriter writer = new XMLWriter(out);
 	    writer.write(doc);
+	    writer.flush();
 		 
 		    
 		
