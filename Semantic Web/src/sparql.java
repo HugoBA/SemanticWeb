@@ -100,15 +100,12 @@ public class sparql {
 		SAXReader reader = new SAXReader(
 	            org.ccil.cowan.tagsoup.Parser.class.getName());
 	    org.dom4j.Document doc = (org.dom4j.Document) reader.read(new ByteArrayInputStream(result.getBytes(StandardCharsets.UTF_8)));
-	    XMLWriter writer = new XMLWriter(out);
-	    writer.write(doc);
-	    writer.flush();
-		 
-		    
-		
-	
-     	
-		
+	    result = doc.asXML();
+	    result = result.replace("xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:html=\"http://www.w3.org/1999/xhtml\"","");
+	    //XMLWriter writer = new XMLWriter(out);
+	    //writer.write(doc);
+	    //writer.flush();
+	    out.write(result);
 
 	}
 
