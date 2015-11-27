@@ -54,7 +54,7 @@ public class Jaccard {
 			for (Iterator jRDF = listRDF.iterator(); jRDF.hasNext(); j++) {
 				Element curRDF2 = (Element) jRDF.next();
 
-				if (i != j) {
+				if (i > j) {
 					comparerRDF(curRDF1, i, curRDF2, j, args[0]);
 				}
 			}
@@ -73,7 +73,7 @@ public class Jaccard {
 		try {
 			// On crée un nouveau document JDOM avec en argument le fichier XML
 			// Le parsing est terminé ;)
-			document = sxb.build(new File("liste_rdf.xml"));
+			document = sxb.build(new File("rdf.xml"));
 			System.out.println("Fichier ouvert");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -116,6 +116,7 @@ public class Jaccard {
 		List<Element> listTriplet1 = rdf1.getChildren("triplet");
 		List<Element> listTriplet2 = rdf2.getChildren("triplet");
 		carUnion[i][j] = listTriplet1.size() + listTriplet2.size();
+		carUnion[j][i] = listTriplet1.size() + listTriplet2.size();
 		if(param.equals("0"))
 		{
 			for (Element iTriplet : listTriplet1) {
@@ -138,6 +139,8 @@ public class Jaccard {
 						Element jTriplet=(Element)jIt.next();
 						if (comparerTripletEntier(iTriplet, jTriplet)) {
 							mat[i][j] += 1.0;
+							mat[j][i] += 1.0;
+							carUnion[j][i] -= 1;
 							carUnion[i][j] -= 1;
 							break;
 						}
@@ -168,6 +171,8 @@ public class Jaccard {
 						Element jTriplet=(Element)jIt.next();
 						if (comparerTripletSujet(iTriplet, jTriplet)) {
 							mat[i][j] += 1.0;
+							mat[j][i] += 1.0;
+							carUnion[j][i] -= 1;
 							carUnion[i][j] -= 1;
 							break;
 						}
@@ -199,6 +204,8 @@ public class Jaccard {
 						Element jTriplet=(Element)jIt.next();
 						if (comparerTripletObjet(iTriplet, jTriplet)) {
 							mat[i][j] += 1.0;
+							mat[j][i] += 1.0;
+							carUnion[j][i] -= 1;
 							carUnion[i][j] -= 1;
 							break;
 						}
