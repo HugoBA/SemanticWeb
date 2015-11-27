@@ -253,7 +253,6 @@ public class Jaccard {
 	}
 
 	private static boolean comparerObjet(Element triplet1, Element triplet2) {
-		System.out.print("je suis passee ici");
 		Element uri1 = triplet1.getChild("uri");
 		Element uri2 = triplet2.getChild("uri");
 		Element literal1 = triplet1.getChild("literal");
@@ -301,7 +300,8 @@ public class Jaccard {
 		for (int i = 0; i < nbRDF; i++) {
 			for (int j = i; j < nbRDF; j++) {
 				if (mat[i][j] > seuil && mat[i][j] < 1)
-					gv.addln(urls.get(i) + "--" + urls.get(j) + "[label=\""
+					gv.addln("\"" + urls.get(i).replace("http://", "").replace("https://", "") + "\""
+							+ "--" + "\"" + urls.get(j).replace("http://", "").replace("https://", "") + "\"" + "[label=\""
 							+ (new DecimalFormat("#.##").format(mat[i][j])) + "\",weight=\""
 							+ (new DecimalFormat("#.##").format(mat[i][j])) + "\"];");
 			}
